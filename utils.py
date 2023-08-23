@@ -1,0 +1,23 @@
+column_list={'Acct #',
+ 'Carrier',
+ 'Delivery Date',
+ 'Delivery Days',
+ 'Delivery Status',
+ 'Dimension',
+ 'Freight',
+ 'Order #',
+ 'Rated Weight',
+ 'Service',
+ 'Ship Date',
+ 'Ship To City',
+ 'Ship To Country',
+ 'Ship To State',
+ 'Ship To Zip',
+ 'Zone'}
+
+brand_map={21870:'lumin',
+21871:'lumin',
+21872:'meridian',
+21873:'meridian',
+21874:'lumin',
+21875:'meridian'}
