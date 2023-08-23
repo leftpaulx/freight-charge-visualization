@@ -18,7 +18,7 @@ def show_lineplot(df,column):
     all_items=df.value_counts(column)
     items_to_use=all_items[all_items>5].index
     df_to_use=df[df[column].isin(items_to_use)]
-    grouped_df=df_to_use.groupby(['Week',column]).mean()['Freight'].reset_index()
+    grouped_df=df_to_use.groupby(['Week',column])['Freight'].mean().reset_index()
     fig=px.line(grouped_df,x='Week',y='Freight',color=column,title=f'Freight by {column}')
     fig.update_layout( yaxis={'tickformat': '$.2f'})
     st.plotly_chart(fig)
