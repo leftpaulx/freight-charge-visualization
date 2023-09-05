@@ -9,7 +9,7 @@ st.header('DCL Freight Cost Tracker 📉')
 uploaded_file=st.file_uploader("Please upload the freight file",type='csv',accept_multiple_files=False)
 if uploaded_file is not None:
     try:
-        df=pd.read_csv(uploaded_file,parse_dates=['Ship Date'])
+        df=pd.read_csv(uploaded_file,parse_dates=['Ship Date'],encoding='Windows-1252')
         st.dataframe(df)
     except:
         st.warning('The file cannot be parsed, please check the file/data type')
@@ -23,6 +23,12 @@ if uploaded_file is not None:
             st.warning('Acct #, Carrier, Delivery Date, Delivery Days, Delivery Status, Dimension, Freight, Order #, Rated Weight, Service, Ship Date, Ship To City,\
                         Ship To Country,Ship To State,Ship To Zip,Zone')
         # Table Cleaning
+        if df['Rated Weight'].dtype!='float':
+            df['Rated Weight']=df['Rated Weight'].str.replace(',','',regex=False)
+            df['Rated Weight']=df['Rated Weight'].astype('float')
+        if df['Freight'].dtype!='float':
+            df['Freight']=df['Freight'].str.replace(',','',regex=False)
+            df['Freight']=df['Freight'].astype('float')
         df['Weight Block']=pd.cut(df['Rated Weight'],[0,0.5,1,1.5,2,np.inf],right=False,labels=['0-0.5','0.5-1','1-1.5','1.5-2','2+'])
         df['Week']=pd.to_datetime(df['Ship Date'].dt.isocalendar().year.astype(str) + df['Ship Date'].dt.isocalendar().week.astype(str) + "1",format='%G%V%w')
         df['Brand']=df['Acct #'].map(brand_map)
